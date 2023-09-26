@@ -17,13 +17,31 @@
     <div class="container">
       
       <div class="add-book-box">
-        <form action="">
+        <form id="add-book-form">
+          <div class="add-book-form-infos">
+            <div class="add-book-form-infos-label-box">
+              <label for="add-title">Judul</label>
+              <label for="add-author">Pengarang</label>
+              <label for="add-year">Tahun</label>
+              <label for="add-isComplete">Dibaca</label>
+            </div>
 
+            <div>
+              <input type="text" name="add-title" id="add-title">
+              <input type="text" name="add-author" id="add-author">
+              <input type="text" name="add-year" id="add-year">
+              <input type="checkbox" name="add-isComplete" id="add-isComplete">
+            </div>
+          </div>
+
+          <div class="add-book-form-submit">
+            <input type="submit" name="add-submit" value="Tambahkan">
+          </div>
         </form>
       </div>
 
       <div class="search-book-box">
-        <form action="" name="search-submit" id="search-book-form">
+        <form action="" id="search-book-form">
           <label for="search-book">Search</label>
           <input type="text" name="search-book" id="search-book">
           <input type="submit" name="search-submit" id="search-submit" value="Cari">

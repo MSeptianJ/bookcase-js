@@ -48,19 +48,94 @@ main .container {
 	margin: 0 auto;
 }
 
+/** Add Book */
+
 .add-book-box {
 	width: 80%;
 	max-width: 400px;
 	margin: 40px auto 0;
-	padding: 25px;
+	padding: 10px 20px;
 	border-radius: 5px;
+	font-size: 14px;
+	color: var(--text);
 	background-color: var(--primary);
 }
 
 .add-book-box form {
 	width: 100%;
 	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
 }
+
+.add-book-box .add-book-form-infos {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	gap: 10px;
+	justify-content: space-around;
+}
+
+.add-book-box .add-book-form-infos-label-box {
+	padding-right: 10px;
+	border: none;
+	border-right: #eeeeee solid 1px;
+}
+
+.add-book-box .add-book-form-infos label {
+	display: block;
+	width: 100%;
+	margin: 0 auto 5px;
+	padding: 5px;
+}
+
+.add-book-box .add-book-form-infos input {
+	width: 100%;
+	margin: 0 0 5px;
+	padding: 5px;
+	background-color: transparent;
+	border: none;
+	border-bottom: #eeeeee solid 1px;
+}
+
+.add-book-box .add-book-form-infos #add-isComplete {
+	display: flex;
+	margin: 8px 0;
+	width: 15px;
+	height: 15px;
+}
+
+.add-book-box .add-book-form-infos input:focus {
+	outline: none;
+}
+
+.add-book-box .add-book-form-submit {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.add-book-box .add-book-form-submit input {
+	all: unset;
+	display: block;
+	width: 35%;
+	margin: 0 auto;
+	padding: 5px;
+	text-align: center;
+	border-radius: 3px;
+	background-color: var(--sub-primary);
+	cursor: pointer;
+}
+
+.add-book-box .add-book-form-submit input:hover,
+.add-book-box .add-book-form-submit input:active {
+	background-color: var(--bg);
+	color: var(--primary);
+}
+
+/** Search Book */
 
 .search-book-box {
 	width: 80%;
@@ -69,13 +144,14 @@ main .container {
 	padding: 10px 20px;
 	background-color: var(--primary);
 	border-radius: 3px;
+	color: var(--text);
 }
 
 .search-book-box form {
 	width: 100%;
 	margin: 0 auto;
 	display: flex;
-	gap: 10px;
+	gap: 20px;
 	justify-content: space-between;
 	align-items: center;
 	text-align: center;
@@ -100,5 +176,12 @@ main .container {
 	padding: 5px;
 	width: 10%;
 	border-radius: 3px;
+	cursor: pointer;
 	background-color: var(--sub-primary);
+}
+
+.search-book-box form #search-submit:hover,
+.search-book-box form #search-submit:active {
+	background-color: var(--bg);
+	color: var(--primary);
 }
