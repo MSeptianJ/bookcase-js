@@ -212,7 +212,48 @@ main .container {
 .bookcase-box section h3 {
 	width: 100%;
 	font-size: 16px;
+	margin-bottom: 15px;
 }
+
+/** Books */
+
+.book-list {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.book-item {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 auto;
+	padding: 10px;
+	background-color: var(--sub-primary);
+	border: #eeeeee solid 1px;
+	border-radius: 3px;
+}
+
+.book-item h5 {
+	font-size: 14px;
+}
+
+.book-item p {
+	font-size: 12px;
+}
+
+.book-item-btn button {
+	all: unset;
+	margin: 0 auto;
+	padding: 10px;
+	cursor: pointer;
+}
+
+/** Responsiveness */
 
 @media screen and (min-width: 768px) {
 	.bookcase-box {
