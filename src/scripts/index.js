@@ -5,17 +5,23 @@ let booksArray = [];
 const searchForm = document.getElementById('search-book-form');
 const addForm = document.getElementById('add-book-form');
 
+// Add Form
+const title = document.getElementById('add-title');
+const author = document.getElementById('add-author');
+const year = document.getElementById('add-year');
+const isComplete = document.getElementById('add-isComplete');
+
+// Search Form
+const searchTitle = document.getElementById('search-book');
+
 // book List
 const readBookList = document.getElementById('read-book-list');
 const unreadBookList = document.getElementById('unread-book-list');
 
+// Functions
 const addBook = (form) => {
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
-		const title = document.getElementById('add-title');
-		const author = document.getElementById('add-author');
-		const year = document.getElementById('add-year');
-		const isComplete = document.getElementById('add-isComplete');
 
 		const dataBook = {
 			id: +new Date(),
@@ -41,9 +47,37 @@ const fillArray = () => {
 	render(booksArray);
 };
 
+const deleteBook = (id) => {
+	booksArray = booksArray.filter((book) => book.id !== id);
+	localStorage.getItem('book', JSON.stringify(booksArray));
+	refreshBooks();
+};
+
+function checkBook(id) {
+	const index = booksArray.findIndex((book) => book.id === id);
+	booksArray[index].isComplete = true;
+	refreshBooks();
+}
+
+function uncheckBook(id) {
+	const index = booksArray.findIndex((book) => book.id === id);
+	booksArray[index].isComplete = false;
+	refreshBooks();
+}
+
 const searchBook = (form) => {
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
+
+		if (searchTitle.value) {
+			render(
+				booksArray.filter((book) =>
+					book.title.toLowerCase().includes(searchTitle.value.toLowerCase())
+				)
+			);
+		} else {
+			render(booksArray);
+		}
 	});
 };
 
@@ -62,8 +96,8 @@ const render = (books) => {
 
 		if (!book.isComplete) {
 			bookItem.innerHTML = `
-				<div class="book-item-text">
-					<h5>
+			<div class="book-item-text">
+			<h5>
 						${book.title} 
 					</h5>
 					<p>
@@ -75,11 +109,11 @@ const render = (books) => {
 				</div>
 
 				<div class="book-item-btn">
-					<button>
+					<button onclick="deleteBook(${book.id})">
 						<i class="fas fa-trash-can"></i>
 					</button>
 
-					<button>
+					<button onclick="checkBook(${book.id})">
 						<i class="far fa-check-square"></i>
 					</button>
 				</div>
@@ -98,14 +132,14 @@ const render = (books) => {
 							${book.year}
 						</p>
 					</div>
-	
+
 					<div class="book-item-btn">
-						<button>
+						<button onclick="deleteBook(${book.id})">
 							<i class="fas fa-trash-can"></i>
 						</button>
-	
-						<button>
-							<i class="far fa-check-square"></i>
+
+						<button onclick="uncheckBook(${book.id})">
+							<i class="fas fa-check-square"></i>
 						</button>
 					</div>
 				`;
@@ -116,7 +150,6 @@ const render = (books) => {
 
 window.addEventListener('load', () => {
 	fillArray();
-
 	searchBook(searchForm);
 	addBook(addForm);
 });

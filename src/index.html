@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/index.css">
-  <title>BookCase</title>
+  <title>Lemari Buku</title>
   <script src="https://kit.fontawesome.com/8f037559c2.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,7 +16,7 @@
 
   <main>
     <div class="container">
-      
+
       <div class="add-book-box">
         <form id="add-book-form">
           <div class="add-book-form-infos">
@@ -28,9 +28,9 @@
             </div>
 
             <div>
-              <input type="text" name="add-title" id="add-title">
-              <input type="text" name="add-author" id="add-author">
-              <input type="text" name="add-year" id="add-year">
+              <input type="text" name="add-title" id="add-title" required>
+              <input type="text" name="add-author" id="add-author" required>
+              <input type="text" name="add-year" id="add-year" required>
               <input type="checkbox" name="add-isComplete" id="add-isComplete">
             </div>
           </div>
@@ -49,7 +49,6 @@
         </form>
       </div>
 
-
       <article class="bookcase-box">
         <section class="bookcase-unread">
           <h3>Belum Dibaca</h3>
@@ -66,6 +65,7 @@
           </div>
         </section>
       </article>
+
     </div>
   </main>
 
