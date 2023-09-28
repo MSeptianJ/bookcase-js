@@ -1,5 +1,7 @@
 // Global varible
 let booksArray = [];
+const STORAGE_KEY = 'book';
+const mainEl = document.querySelector('main');
 
 // Forms
 const searchForm = document.getElementById('search-book-form');
@@ -18,9 +20,9 @@ const searchTitle = document.getElementById('search-book');
 const readBookList = document.getElementById('read-book-list');
 const unreadBookList = document.getElementById('unread-book-list');
 
-// Functions
-const addBook = (form) => {
-	form.addEventListener('submit', (event) => {
+// CRUD Functions
+const addBook = () => {
+	addForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 
 		const dataBook = {
@@ -32,41 +34,58 @@ const addBook = (form) => {
 		};
 
 		booksArray.push(dataBook);
-		console.log(dataBook);
 		refreshBooks();
 	});
 };
 
-const refreshBooks = () => {
-	localStorage.setItem('book', JSON.stringify(booksArray));
-	render(booksArray);
+const deleteBook = (id, data) => {
+	const deleteForm = document.getElementById('delete-form');
+	deleteForm.remove();
+	if (data) {
+		booksArray = booksArray.filter((book) => book.id !== id);
+		localStorage.getItem(STORAGE_KEY, JSON.stringify(booksArray));
+		refreshBooks();
+	}
 };
 
-const fillArray = () => {
-	booksArray = JSON.parse(localStorage.getItem('book')) || [];
-	render(booksArray);
+const deleteModal = (id) => {
+	const modal = document.createElement('div');
+	modal.classList.add('delete-modal');
+	modal.id = 'delete-form';
+	modal.innerHTML = `
+		<div class="delete-form-box">
+			<p>
+			Apakah anda ingin menghapus buku ini?
+			</p>
+			<div>
+			<button onclick="deleteBook(${id}, true)">Yes</button>
+			<button onclick="deleteBook(${id}, false)">No</button>
+			</div>
+		</div>
+	`;
+	mainEl.appendChild(modal);
 };
 
-const deleteBook = (id) => {
-	booksArray = booksArray.filter((book) => book.id !== id);
-	localStorage.getItem('book', JSON.stringify(booksArray));
-	refreshBooks();
+const getAllBooks = () => {
+	const dataBook = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+	return dataBook;
 };
 
-function checkBook(id) {
+// Book Features
+const checkBook = (id) => {
 	const index = booksArray.findIndex((book) => book.id === id);
 	booksArray[index].isComplete = true;
 	refreshBooks();
-}
+};
 
-function uncheckBook(id) {
+const uncheckBook = (id) => {
 	const index = booksArray.findIndex((book) => book.id === id);
 	booksArray[index].isComplete = false;
 	refreshBooks();
-}
+};
 
-const searchBook = (form) => {
-	form.addEventListener('submit', (event) => {
+const searchBook = () => {
+	searchForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 
 		if (searchTitle.value) {
@@ -79,6 +98,17 @@ const searchBook = (form) => {
 			render(booksArray);
 		}
 	});
+};
+
+// Render Books
+const refreshBooks = () => {
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(booksArray));
+	render(booksArray);
+};
+
+const fillArray = () => {
+	booksArray = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+	render(booksArray);
 };
 
 const createBookItem = () => {
@@ -109,7 +139,7 @@ const render = (books) => {
 				</div>
 
 				<div class="book-item-btn">
-					<button onclick="deleteBook(${book.id})">
+					<button onclick="deleteModal(${book.id})">
 						<i class="fas fa-trash-can"></i>
 					</button>
 
@@ -134,7 +164,7 @@ const render = (books) => {
 					</div>
 
 					<div class="book-item-btn">
-						<button onclick="deleteBook(${book.id})">
+						<button onclick="deleteModal(${book.id})">
 							<i class="fas fa-trash-can"></i>
 						</button>
 
@@ -148,8 +178,9 @@ const render = (books) => {
 	});
 };
 
+// After load
 window.addEventListener('load', () => {
 	fillArray();
-	searchBook(searchForm);
-	addBook(addForm);
+	searchBook();
+	addBook();
 });
