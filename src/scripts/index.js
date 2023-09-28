@@ -1,7 +1,7 @@
 // Global varible
-let booksArray = [];
 const STORAGE_KEY = 'book';
-const mainEl = document.querySelector('main');
+let booksArray = getAllBooksLocal();
+const bookcaseEl = document.getElementById('bookcase-box');
 
 // Forms
 const searchForm = document.getElementById('search-book-form');
@@ -20,8 +20,14 @@ const searchTitle = document.getElementById('search-book');
 const readBookList = document.getElementById('read-book-list');
 const unreadBookList = document.getElementById('unread-book-list');
 
+// Get All Books
+function getAllBooksLocal() {
+	const dataBook = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+	return dataBook;
+}
+
 // CRUD Functions
-const addBook = () => {
+const addNewBook = () => {
 	addForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 
@@ -34,7 +40,7 @@ const addBook = () => {
 		};
 
 		booksArray.push(dataBook);
-		refreshBooks();
+		addAndRenderBooks();
 	});
 };
 
@@ -44,7 +50,7 @@ const deleteBook = (id, data) => {
 	if (data) {
 		booksArray = booksArray.filter((book) => book.id !== id);
 		localStorage.getItem(STORAGE_KEY, JSON.stringify(booksArray));
-		refreshBooks();
+		addAndRenderBooks();
 	}
 };
 
@@ -63,25 +69,20 @@ const deleteModal = (id) => {
 			</div>
 		</div>
 	`;
-	mainEl.appendChild(modal);
-};
-
-const getAllBooks = () => {
-	const dataBook = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-	return dataBook;
+	bookcaseEl.appendChild(modal);
 };
 
 // Book Features
 const checkBook = (id) => {
 	const index = booksArray.findIndex((book) => book.id === id);
 	booksArray[index].isComplete = true;
-	refreshBooks();
+	addAndRenderBooks();
 };
 
 const uncheckBook = (id) => {
 	const index = booksArray.findIndex((book) => book.id === id);
 	booksArray[index].isComplete = false;
-	refreshBooks();
+	addAndRenderBooks();
 };
 
 const searchBook = () => {
@@ -101,13 +102,8 @@ const searchBook = () => {
 };
 
 // Render Books
-const refreshBooks = () => {
+const addAndRenderBooks = () => {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(booksArray));
-	render(booksArray);
-};
-
-const fillArray = () => {
-	booksArray = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 	render(booksArray);
 };
 
@@ -180,7 +176,7 @@ const render = (books) => {
 
 // After load
 window.addEventListener('load', () => {
-	fillArray();
+	render(booksArray);
 	searchBook();
-	addBook();
+	addNewBook();
 });
